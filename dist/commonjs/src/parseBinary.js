@@ -422,9 +422,9 @@ class WasmReader {
     readElementEntry() {
         const modeFlags = this.readByte() & 0b111;
         let mode;
-        if ((modeFlags & 0b1) === 0)
+        if ((modeFlags & 0b001) === 0b000)
             mode = 0;
-        else if ((modeFlags & 0b11) === 0b11)
+        else if ((modeFlags & 0b011) === 0b011)
             mode = 2;
         else
             mode = 1;
@@ -434,11 +434,11 @@ class WasmReader {
             type: -16,
             initialization: []
         };
-        if ((modeFlags & 0b10) === 0b10)
+        if ((modeFlags & 0b010) === 0b010)
             segment.tableIndex = this.readUint32();
-        if (mode === 0)
+        if ((modeFlags & 0b001) === 0b000)
             segment.offset = this.readInstructionExpression();
-        if ((modeFlags & 0b11) !== 0) {
+        if ((modeFlags & 0b011) !== 0) {
             segment.type = this.readByte();
             this.assert(typeof const_1.ElementKindString[segment.type] === "string" || typeof const_1.ReferenceTypeString[segment.type] === "string", "Invalid element type");
         }

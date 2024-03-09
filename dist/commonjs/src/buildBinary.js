@@ -467,6 +467,7 @@ const buildBinary = (wasmModule) => {
     builder.buildSection(7, builder.writeExportEntry, wasmModule.exports);
     if (wasmModule.start !== null)
         builder.writeUint32(wasmModule.start);
+    builder.buildSection(9, builder.writeElementEntry, wasmModule.elements);
     builder.buildSection(10, builder.writeCodeEntry, wasmModule.functions);
     builder.buildSection(11, builder.writeDataEntry, wasmModule.datas);
     if (wasmModule.customSections.length) {

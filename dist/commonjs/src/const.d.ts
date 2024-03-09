@@ -546,7 +546,7 @@ export interface TerminatingEndInstruction extends Instruction {
     opcode: Opcode.End;
 }
 export declare const TerminatingEndInstruction: TerminatingEndInstruction;
-export declare type InstructionExpression = [...Instruction[], TerminatingEndInstruction];
+export type InstructionExpression = [...Instruction[], TerminatingEndInstruction];
 export declare const enum SectionId {
     Custom = 0,
     Type = 1,
@@ -564,7 +564,7 @@ export declare const enum SectionId {
 }
 export declare const SectionName: Record<SectionId, string>;
 export declare const InverseSectionName: Record<string, SectionId>;
-export declare type ImportEntry = {
+export type ImportEntry = {
     module: string;
     name: string;
     type: ExternalType;
@@ -588,7 +588,7 @@ export interface GlobalEntry {
     type: GlobalType;
     initialization: InstructionExpression;
 }
-export declare type ExportEntry = {
+export type ExportEntry = {
     name: string;
     type: ExternalType;
 } & ({
@@ -642,7 +642,7 @@ export declare const enum DataSegmentMode {
 }
 export declare const DataSegmentModeString: Record<DataSegmentMode, string>;
 export declare const InverseDataSegmentModeString: Record<string, BlockType>;
-export declare type DataSegment = {
+export type DataSegment = {
     mode: DataSegmentMode;
     initialization: Uint8Array;
 } & ({
