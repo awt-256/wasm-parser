@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import { CustomSubSection, DataSegment, DataSegmentMode, ElementSegment, ElementSegmentMode, ExportEntry, ExternalType, FunctionCode, FunctionDescription, FunctionType, GlobalEntry, GlobalType, ImportEntry, Instruction, InstructionExpression, MemoryArgument, MemoryType, Opcode, Opstring, ResizableLimits, SectionId, TableType, ValueType, WasmModule } from "./const";
+import { CustomSubSection, DataSegment, DataSegmentMode, ElementKind, ElementSegment, ElementSegmentMode, ExportEntry, ExternalType, FunctionCode, FunctionDescription, FunctionType, GlobalEntry, GlobalType, ImportEntry, Instruction, InstructionExpression, MemoryArgument, MemoryType, Opcode, Opstring, ReferenceType, ResizableLimits, SectionId, TableType, ValueType, WasmModule } from "./const";
 
 const convo = new ArrayBuffer(8);
 const u8 = new Uint8Array(convo);
@@ -556,6 +556,7 @@ export const buildBinary = (wasmModule: WasmModule) => {
     builder.buildSection(SectionId.Global, builder.writeGlobalEntry, wasmModule.globals);
     builder.buildSection(SectionId.Export, builder.writeExportEntry, wasmModule.exports);
     if (wasmModule.start !== null) builder.writeUint32(wasmModule.start);
+    builder.buildSection(SectionId.Element, builder.writeElementEntry, wasmModule.elements);
     builder.buildSection(SectionId.Code, builder.writeCodeEntry, wasmModule.functions);
     builder.buildSection(SectionId.Data, builder.writeDataEntry, wasmModule.datas);
     

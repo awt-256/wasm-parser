@@ -527,8 +527,8 @@ class WasmReader {
         const modeFlags = this.readByte() & 0b111;
 
         let mode;
-        if ((modeFlags & 0b1) === 0) mode = ElementSegmentMode.Active;
-        else if ((modeFlags & 0b11) === 0b11) mode = ElementSegmentMode.Declarative;
+        if ((modeFlags & 0b001) === 0b000) mode = ElementSegmentMode.Active;
+        else if ((modeFlags & 0b011) === 0b011) mode = ElementSegmentMode.Declarative;
         else mode = ElementSegmentMode.Passive;
 
         const segment: ElementSegment = {
@@ -538,10 +538,10 @@ class WasmReader {
             initialization: []
         }
 
-        if ((modeFlags & 0b10) === 0b10) segment.tableIndex = this.readUint32();
-        if (mode === ElementSegmentMode.Active) segment.offset = this.readInstructionExpression();
+        if ((modeFlags & 0b010) === 0b010) segment.tableIndex = this.readUint32();
+        if ((modeFlags & 0b001) === 0b000) segment.offset = this.readInstructionExpression();
 
-        if ((modeFlags & 0b11) !== 0) {
+        if ((modeFlags & 0b011) !== 0) {
             segment.type = this.readByte();
 
             this.assert(typeof ElementKindString[segment.type as ElementKind] === "string" || typeof ReferenceTypeString[segment.type as ReferenceType] === "string", "Invalid element type");
